@@ -22,9 +22,9 @@ docker run ... hetsh/boinc --allow_remote_gui_rpc
 ```bash
 STORAGE="/path/to/storage"
 mkdir -p "$STORAGE"
-chown -R 1366:1366 "$STORAGE"
+chown -R 1371:1371 "$STORAGE"
 ```
-`1366` is the numerical id of the user running the server (see Dockerfile).
+`1371` is the numerical id of the user running the server (see Dockerfile).
 The user must have RW access to the storage directory.
 Start the server with the additional mount flags:
 ```bash

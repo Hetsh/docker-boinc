@@ -6,7 +6,7 @@ RUN echo "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/re
     ca-certificates=20191127-r5
 
 # App user
-ARG APP_UID=1366
+ARG APP_UID=1371
 ARG APP_USER="boinc"
 RUN sed -i "s|$APP_USER:x:[0-9]\+:|$APP_USER:x:$APP_UID:|" "/etc/group" && \
     sed -i "s|$APP_USER:x:[0-9]\+:[0-9]\+|$APP_USER:x:$APP_UID:$APP_UID|" "/etc/passwd"
