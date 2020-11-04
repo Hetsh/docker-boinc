@@ -1,10 +1,9 @@
-FROM library/debian:stable-20201012-slim
-RUN DEBIAN_FRONTEND="noninteractive" && \
-    apt-get update && \
-    apt-get install --no-install-recommends --assume-yes \
-        boinc-client=7.14.2+dfsg-3 && \
-        rm -r "/var/lib/boinc" "/var/lib/boinc-client" && \
-    rm -r /var/lib/apt/lists /var/cache/apt
+FROM library/alpine:20200917
+RUN echo "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
+    apk update && \
+    apk add --no-cache \
+    boinc@testing=7.16.1-r2 \
+    ca-certificates=20191127-r5
 
 # App user
 ARG APP_UID=1366
@@ -14,9 +13,9 @@ RUN sed -i "s|$APP_USER:x:[0-9]\+:|$APP_USER:x:$APP_UID:|" "/etc/group" && \
 
 # Config & Volumes
 ARG DATA_DIR="/boinc-data"
-RUN mv "/etc/boinc-client" "$DATA_DIR" && \
-    chown "$APP_USER" "$DATA_DIR" "$DATA_DIR/cc_config.xml" && \
-    chgrp -R "$APP_USER" "$DATA_DIR" && \
+RUN mkdir "$DATA_DIR" && \
+    echo -e "<cc_config>\n  <log_flags>\n    <task>1</task>\n    <file_xfer>1</file_xfer>\n    <sched_ops>1</sched_ops>\n  </log_flags>\n</cc_config>" > "$DATA_DIR/cc_config.xml" && \
+    chown -R "$APP_USER":"$APP_USER" "$DATA_DIR" && \
     ln -s "/etc/ssl/certs/ca-certificates.crt" "$DATA_DIR/ca-bundle.crt"
 VOLUME ["$DATA_DIR"]
 

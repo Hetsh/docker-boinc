@@ -16,13 +16,14 @@ source libs/docker.sh
 assert_dependency "jq"
 assert_dependency "curl"
 
-# Debian Stable
-IMG_CHANNEL="stable"
-update_image "library/debian" "Debian" "false" "$IMG_CHANNEL-\d+-slim"
+# Alpine Linux
+update_image "library/alpine" "Alpine Linux" "false" "\d{8}"
 
 # Packages
-PKG_URL="https://packages.debian.org/$IMG_CHANNEL/amd64"
-update_pkg "boinc-client" "BOINC Client" "true" "$PKG_URL" "\d+(\.\d+)+\+dfsg-\d+"
+IMG_ARCH="x86_64"
+BASE_PKG_URL="https://pkgs.alpinelinux.org/package/edge"
+update_pkg "boinc" "BOINC Client" "true" "$BASE_PKG_URL/testing/$IMG_ARCH" "(\d+\.)+\d+-r\d+"
+update_pkg "ca-certificates" "CA-Certificates" "false" "$BASE_PKG_URL/main/$IMG_ARCH" "\d{8}-r\d+"
 
 if ! updates_available; then
 	#echo "No updates available."
