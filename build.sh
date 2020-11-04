@@ -20,33 +20,22 @@ if ! docker version &> /dev/null; then
 fi
 
 # Build the image
-APP_NAME="folding-at-home"
+APP_NAME="boinc"
 IMG_NAME="hetsh/$APP_NAME"
 docker build --tag "$IMG_NAME" --tag "$IMG_NAME:$(git describe --tags --abbrev=0)" .
 
 # Start the test
 case "${1-}" in
 	"--test")
-		# Set up temporary directory
-		TMP_DIR=$(mktemp -d "/tmp/$APP_NAME-XXXXXXXXXX")
-		add_cleanup "rm -rf $TMP_DIR"
-
-		# Apply permissions, UID matches process user
-		extract_var APP_UID "Dockerfile" "\K\d+"
-		chown -R "$APP_UID":"$APP_UID" "$TMP_DIR"
-
 		# Start the test
-		extract_var DATA_DIR "Dockerfile" "\"\K[^\"]+"
 		docker run \
 		--rm \
 		--tty \
 		--interactive \
-		--publish 7396:7396/tcp \
-		--publish 36330:36330/tcp \
-		--mount type=bind,source="$TMP_DIR",target="/$DATA_DIR" \
+		--publish 31416:31416/tcp \
 		--mount type=bind,source=/etc/localtime,target=/etc/localtime,readonly \
 		--name "$APP_NAME" \
-		"$IMG_NAME" --paused --web-allow=0/0:7396 --allow=0/0:7396
+		"$IMG_NAME" --allow_remote_gui_rpc
 	;;
 	"--upload")
 		if ! tag_exists "$IMG_NAME"; then

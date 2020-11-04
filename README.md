@@ -1,38 +1,34 @@
-# Folding@Home
-Simple to set up image equipped with the Folding@Home client.
+# BOINC
+Simple to set up BOINC client.
 
 ## Running the server
 ```bash
-docker run --detach --name folding-at-home hetsh/folding-at-home
+docker run --detach --name boinc hetsh/boinc
 ```
 
 ## Stopping the container
 ```bash
-docker stop folding-at-home
+docker stop boinc
 ```
 
 ## Configuring
-The Folding@Home client can be configured via its [web interface](http://localhost:7396).
-This requires some additional cli parameters at startup:
+The BOINC client can be configured via [boincmgr](https://boinc.berkeley.edu/wiki/BOINC_Manager) or [boinccmd](https://boinc.berkeley.edu/wiki/Boinccmd_tool).
+Remote connections require addition parameter:
 ```bash
-docker run ... --publish 7396:7396 hetsh/folding-at-home --web-allow=0/0:7396 --allow=0/0:7396
-```
-Alternatively the Folding@Home Controller can connect to the client via port `36330`:
-```bash
-docker run ... --publish 36330:36330 hetsh/folding-at-home --allow=0/0:36330
+docker run ... hetsh/boinc --allow_remote_gui_rpc
 ```
 
 ## Creating persistent storage
 ```bash
 STORAGE="/path/to/storage"
 mkdir -p "$STORAGE"
-chown -R 1362:1362 "$STORAGE"
+chown -R 1366:1366 "$STORAGE"
 ```
-`1362` is the numerical id of the user running the server (see Dockerfile).
+`1366` is the numerical id of the user running the server (see Dockerfile).
 The user must have RW access to the storage directory.
 Start the server with the additional mount flags:
 ```bash
-docker run --mount type=bind,source=/path/to/storage,target=/folding-at-home ...
+docker run --mount type=bind,source=/path/to/storage,target=/boinc-data ...
 ```
 
 ## Time
@@ -43,13 +39,13 @@ docker run --mount type=bind,source=/etc/localtime,target=/etc/localtime,readonl
 ```
 
 ## Automate startup and shutdown via systemd
-The systemd unit can be found in my GitHub [repository](https://github.com/Hetsh/docker-folding-at-home).
+The systemd unit can be found in my GitHub [repository](https://github.com/Hetsh/docker-boinc).
 ```bash
-systemctl enable folding-at-home --now
+systemctl enable boinc --now
 ```
-By default, the systemd service assumes `/apps/folding-at-home` for storage and `/etc/localtime` for timezone.
+By default, the systemd service assumes `/apps/boinc-data` for storage and `/etc/localtime` for timezone.
 Since this is a personal systemd unit file, you might need to adjust some parameters to suit your setup.
 
 ## Fork Me!
-This is an open project hosted on [GitHub](https://github.com/Hetsh/docker-folding-at-home).
+This is an open project hosted on [GitHub](https://github.com/Hetsh/docker-boinc).
 Please feel free to ask questions, file an issue or contribute to it.
