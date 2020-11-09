@@ -11,12 +11,10 @@ ARG APP_USER="boinc"
 RUN sed -i "s|$APP_USER:x:[0-9]\+:|$APP_USER:x:$APP_UID:|" "/etc/group" && \
     sed -i "s|$APP_USER:x:[0-9]\+:[0-9]\+|$APP_USER:x:$APP_UID:$APP_UID|" "/etc/passwd"
 
-# Config & Volumes
+# Volumes
 ARG DATA_DIR="/boinc-data"
 RUN mkdir "$DATA_DIR" && \
-    echo -e "<cc_config>\n  <log_flags>\n    <task>1</task>\n    <file_xfer>1</file_xfer>\n    <sched_ops>1</sched_ops>\n  </log_flags>\n</cc_config>" > "$DATA_DIR/cc_config.xml" && \
-    chown -R "$APP_USER":"$APP_USER" "$DATA_DIR" && \
-    ln -s "/etc/ssl/certs/ca-certificates.crt" "$DATA_DIR/ca-bundle.crt"
+    chown "$APP_USER":"$APP_USER" "$DATA_DIR"
 VOLUME ["$DATA_DIR"]
 
 #      RPC
