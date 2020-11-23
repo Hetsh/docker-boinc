@@ -43,7 +43,7 @@ The systemd unit can be found in my GitHub [repository](https://github.com/Hetsh
 ```bash
 systemctl enable boinc --now
 ```
-By default, the systemd service assumes `/apps/boinc-data` for storage and `/etc/localtime` for timezone.
+By default, the systemd service assumes `/apps/boinc` for storage and `/etc/localtime` for timezone.
 Since this is a personal systemd unit file, you might need to adjust some parameters to suit your setup.
 
 ## Fork Me!

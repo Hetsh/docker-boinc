@@ -12,7 +12,7 @@ RUN sed -i "s|$APP_USER:x:[0-9]\+:|$APP_USER:x:$APP_UID:|" "/etc/group" && \
     sed -i "s|$APP_USER:x:[0-9]\+:[0-9]\+|$APP_USER:x:$APP_UID:$APP_UID|" "/etc/passwd"
 
 # Volumes
-ARG DATA_DIR="/boinc-data"
+ARG DATA_DIR="/boinc"
 RUN mkdir "$DATA_DIR" && \
     chown "$APP_USER":"$APP_USER" "$DATA_DIR"
 VOLUME ["$DATA_DIR"]
