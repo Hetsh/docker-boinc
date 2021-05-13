@@ -1,8 +1,8 @@
 FROM library/alpine:20210212
-RUN echo "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
+RUN echo "http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
     apk update && \
     apk add --no-cache \
-    boinc@testing=7.16.1-r2 \
+    boinc=7.16.1-r2 \
     ca-certificates=20191127-r5
 
 # App user
