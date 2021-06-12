@@ -2,8 +2,8 @@ FROM library/alpine:20210212
 RUN echo "http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
     apk update && \
     apk add --no-cache \
-    boinc=7.16.1-r2 \
-    ca-certificates=20191127-r5
+        boinc=7.16.1-r2 \
+        ca-certificates=20191127-r5
 
 # App user
 ARG APP_UID=1371
