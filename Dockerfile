@@ -1,4 +1,4 @@
-FROM amd64/alpine:20220715
+FROM amd64/alpine:20221110
 RUN echo "http://dl-5.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
     apk update && \
     apk add --no-cache \
