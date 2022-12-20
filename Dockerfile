@@ -2,7 +2,7 @@ FROM amd64/alpine:20221110
 RUN echo "http://dl-5.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
     apk update && \
     apk add --no-cache \
-        boinc=7.20.2-r0 \
+        boinc=7.20.5-r0 \
         ca-certificates=20221203-r1
 
 # App user
