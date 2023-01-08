@@ -3,7 +3,7 @@ RUN echo "http://dl-5.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositor
     apk update && \
     apk add --no-cache \
         boinc=7.20.5-r0 \
-        ca-certificates=20221203-r1
+        ca-certificates=20230106-r0
 
 # App user
 ARG APP_UID=1371
